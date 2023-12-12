@@ -1,8 +1,8 @@
-[![Build Status](https://travis-ci.org/pedrorivera/SiaFpgaMiner.svg?branch=master)](https://travis-ci.org/pedrorivera/SiaFpgaMiner)
 
-# SiaFpgaMiner #
 
-This project is a VHDL FPGA core that implements an optimized Blake2b pipeline to mine Siacoin. 
+# MinerTest #
+
+This project is a VHDL FPGA core that implements an optimized Blake2b pipeline to mine 
 
 Motivation
 ----------
@@ -13,7 +13,7 @@ mining centralization. Therefore, emerging altcoins decided to base their PoW pu
 has been designing the algorithm to be memory-hard (i.e. dependent on memory accesses), which makes memory bandwith the computing bottleneck. This gives GPUs an edge over ASICS, effectively democratizing
 access to mining hardware since GPUs are consumer electronics. Ethereum is a clear example of it with its [Ethash](https://github.com/ethereum/wiki/wiki/Ethash) PoW algorithm.
 
-Siacoin is an example of a coin without a memory-hard PoW algorith and ~~no ASIC miners~~ some ASIC miners are being rolled out (see [Obelisk](https://obelisk.tech) and [Antminer A3](https://shop.bitmain.com/productDetail.htm?pid=00020180116164357365a2ljX8gx06D3)). 
+coin is an example of a coin without a memory-hard PoW algorith and ~~no ASIC miners~~ some ASIC miners are being rolled out (see [Obelisk](https://obelisk.tech) and [Antminer A3](https://shop.bitmain.com/productDetail.htm?pid=00020180116164357365a2ljX8gx06D3)). 
 So was a perfect candidate for FPGA mining! (more for fun than profit)
 
 Design theory
@@ -25,7 +25,7 @@ It takes 96 clock cycles to fill the pipeline and start getting valid results (4
 - **MixG.vhd** implements the basic 'G' function in 4 steps. Eight and two-step variations were explored but four steps gave the best balance between resource usage and timing.
 - **QuadG.vhd** is just a wrapper that instantiates 4 MixG to process the full 16-word vectors and make the higher level files easier to understand.
 - **Blake2bMinerCore.vhd** instantiates the MixG components for all rounds and wires their inputs and outputs appropiately. Nonce generation and distribution logic also lives in this file.
-- **/Example** contains an example instantiation of Blake2bMinerCore interfacing a host via UART. It includes a very minimalist Python script to interface the FPGA to a Sia node for mining.
+- **/Example** contains an example instantiation of Blake2bMinerCore interfacing a host via UART. It includes a very minimalist Python script to interface the FPGA to a node for mining.
 
 ### MixG
 
